@@ -1,8 +1,11 @@
 import React from "react"
 
-const TableTd = ({ text }) => {
+const TableTd = ({ text, customClass }) => {
   return (
-    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+    <td
+      className={`border-grey-light border hover:bg-gray-100 p-3 ${
+        customClass && customClass
+      }`}>
       {text}
     </td>
   )

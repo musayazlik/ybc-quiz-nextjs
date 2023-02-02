@@ -1,10 +1,8 @@
 import React from "react"
 
-const TableTh = ({ text }) => {
+const TableTh = ({ text, customClass }) => {
   return (
-    <th className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase ">
-      {text}
-    </th>
+    <th className={`p-3 text-left ${customClass && customClass}`}>{text}</th>
   )
 }
 
