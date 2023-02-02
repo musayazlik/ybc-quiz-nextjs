@@ -1,47 +1,37 @@
 import React from "react"
 import DashboardLayout from "../../layout"
 import { db } from "@/libs/firebase"
-import { set, ref, push } from "firebase/database"
+import { set, ref, child, update, get } from "firebase/database"
 import { uid } from "uid"
 import Swal from "sweetalert2"
 import { useRouter } from "next/router"
 
-const Create = () => {
-  const router = useRouter()
-  const createQuestion = (e) => {
+const Update = ({ questionData }) => {
+  const { query, push } = useRouter()
+
+  console.log(questionData)
+  const updateQuestion = (e) => {
     e.preventDefault()
     const question = e.target.question.value
     const answer1 = e.target.answer1.value
     const answer2 = e.target.answer2.value
+    const uudi = query.id
 
-    const uudi = uid(10)
-
-    if (question === "" || answer1 === "" || answer2 === "") {
-      Swal.fire({
-        title: "Error!",
-        text: "Please fill all fields",
-        icon: "error",
-        confirmButtonText: "Okey",
-      })
-      return
-    }
-
-    const questionSet = {
-      questionId: 1,
+    const questionDataUpdate = {
       question: question,
       answers: [answer1, answer2],
     }
 
-    push(ref(db, "/questions"), questionSet)
+    update(ref(db, `questions/${uudi}`), questionDataUpdate)
       .then(() => {
         Swal.fire({
           title: "Success!",
-          text: "Question created successfully",
+          text: "Question updated successfully",
           icon: "success",
-          timer: 1000,
+          timer: 1500,
           showConfirmButton: false,
         })
-        router.push("/dashboard/questions")
+        push("/dashboard/questions")
       })
       .catch((err) => {
         Swal.fire({
@@ -56,11 +46,11 @@ const Create = () => {
     <>
       <DashboardLayout>
         <h1 className="ml-2 mb-8 font-semibold text-4xl text-center">
-          Question Create
+          Question Update
         </h1>
 
         <div>
-          <form className="w-full max-w-lg mx-auto" onSubmit={createQuestion}>
+          <form className="w-full max-w-lg mx-auto" onSubmit={updateQuestion}>
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 mb-4 ">
                 <label
@@ -72,7 +62,7 @@ const Create = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="question"
                   type="text"
-                  required
+                  defaultValue={questionData.question}
                   placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                 />
               </div>
@@ -86,7 +76,7 @@ const Create = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="answer1"
                   type="text"
-                  required
+                  defaultValue={questionData.answers[0]}
                   placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                 />
               </div>
@@ -100,14 +90,14 @@ const Create = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="answer2"
                   type="text"
-                  required
+                  defaultValue={questionData.answers[1]}
                   placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                 />
               </div>
             </div>
             <div className="flex justify-center mr-2">
-              <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2 duration-300">
-                Created Question
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2">
+                Update Question
               </button>
             </div>
           </form>
@@ -117,4 +107,16 @@ const Create = () => {
   )
 }
 
-export default Create
+export default Update
+
+export async function getServerSideProps(context) {
+  const { id } = context.query
+
+  const question = await get(child(ref(db), `questions/${id}`))
+
+  return {
+    props: {
+      questionData: question.val(),
+    },
+  }
+}
