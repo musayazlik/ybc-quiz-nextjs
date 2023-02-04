@@ -4,10 +4,13 @@ const AppContext = createContext()
 
 export function Wrapper({ children }) {
   const [user, setUser] = useState(null)
+  const [quizCreate, setQuizCreate] = useState()
   const sharedState = {
     // Add your shared state here
     user,
     setUser,
+    quizCreate,
+    setQuizCreate,
   }
 
   return (
