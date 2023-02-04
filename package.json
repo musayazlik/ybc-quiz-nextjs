@@ -9,20 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.1.6",
-    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "firebase": "^9.16.0",
+    "html-react-parser": "^3.0.8",
     "next": "13.1.6",
-    "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "sweetalert2": "^11.7.1",
-    "uid": "^2.0.1",
-    "uniqid": "^5.4.0"
+    "uid": "^2.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
