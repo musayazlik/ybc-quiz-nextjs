@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-typos */
 import Table from "@/components/dashboard/table"
 import TableTh from "@/components/dashboard/table/tableth"
 import TableTd from "@/components/dashboard/table/tabletd"
