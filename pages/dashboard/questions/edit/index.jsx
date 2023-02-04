@@ -8,8 +8,6 @@ import { useRouter } from "next/router"
 
 const Update = ({ questionData }) => {
   const { query, push } = useRouter()
-
-  console.log(questionData)
   const updateQuestion = (e) => {
     e.preventDefault()
     const question = e.target.question.value
