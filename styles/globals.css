@@ -6,3 +6,18 @@
 * {
   font-family: "Nunito", sans-serif;
 }
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.quizPool input:checked + label {
+  @apply bg-violet-500 text-white border-violet-700;
+}
+
+.quizPool input:checked + label span {
+  @apply bg-violet-900 text-white border-violet-800;
+}
