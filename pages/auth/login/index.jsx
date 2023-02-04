@@ -16,11 +16,13 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user
         setUser(user)
-        router.push("/dashboard")
+        console.log(user)
+        //router.push("/dashboard")
       })
       .catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
+        console.log(errorCode, errorMessage)
       })
   }
 
@@ -29,24 +31,28 @@ const Login = () => {
       <div className="w-1/2 h-1/2 bg-gray-200 rounded-lg flex flex-col justify-center items-center">
         <h1 className="text-3xl font-bold">Login</h1>
         <form
-          className="w-1/2 flex flex-col justify-center items-center"
-          onSubmit={handleSubmit}>
+          className="w-1/2 flex flex-col justify-center items-center gap-4"
+          onSubmit={(e) => handleSubmit(e)}>
           <div className="w-full flex flex-col justify-center items-center">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className="text-gray-500 mb-3 mt-8">
+              Email
+            </label>
             <input
-              type="email"
+              type="text"
               name="email"
               id="email"
-              className="w-full border-2 border-gray-300 rounded-lg p-2"
+              className="px-3 py-2 border-2 duration-200 border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             />
           </div>
           <div className="w-full flex flex-col justify-center items-center">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" className="text-gray-500 mb-3">
+              Password
+            </label>
             <input
-              type="password"
+              type="text"
               name="password"
               id="password"
-              className="w-full border-2 border-gray-300 rounded-lg p-2"
+              className=" px-3 py-2 border-2 duration-200 border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             />
           </div>
           <button
