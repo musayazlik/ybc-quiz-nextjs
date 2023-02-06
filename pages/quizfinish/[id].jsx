@@ -41,19 +41,21 @@ const QuizCreate = () => {
       </Head>
       <main className="container mx-auto pt-28 px-5">
         <div className="grid grid-cols-12 gap-y-7">
-          <div className="col-span-3 px-4 py-4 relative">
-            <div className="bg-gray-600 h-40 sticky top-12 "></div>
+          <div className="col-span-3 px-4 py-4 relative hidden lg:flex">
+            <div className="bg-gray-600 h-40 sticky top-12 w-full flex justify-center items-center text-white  ">
+              Reklamlar
+            </div>
           </div>
-          <div className="col-span-6 px-6 mb-10">
+          <div className="col-span-12 lg:col-span-6 px-3 sm:px-6 mb-10">
             <section className="">
-              <h1 className="mb-10 font-maxbold text-5xl text-center underline underline-offset-4 decoration-sky-500 decoration-4 ">
+              <h1 className="mb-10 font-maxbold text-4xl sm:text-5xl text-center underline underline-offset-4 decoration-sky-500 decoration-4 ">
                 Quiz Oluşturuldu...
               </h1>
               <p className="mb-10 font-medium text-lg text-center text-gray-500 ">
                 Quiz başarıyla oluşturuldu. Quizinizi paylaşmak için aşağıdaki
                 bağlantıyı kopyalayın.
               </p>
-              <p className="mb-10 font-medium text-lg text-center text-gray-400 bg-gray-200 border-2 border-gray-500/60 shadow-md rounded-sm py-2 ">
+              <p className="mb-10 font-medium text-lg text-center text-gray-400 bg-gray-200 border-2 border-gray-500/60 shadow-md rounded-sm py-2 overflow-auto px-8 ">
                 {`${process.env.NEXT_PUBLIC_APP_URL}/quizsolve/${router.query.id}`}
               </p>
 
@@ -81,7 +83,7 @@ const QuizCreate = () => {
                     cevapları görebilmek için gerekli olacaktır.
                   </span>
                 </p>
-                <p className="mb-10 w-full font-medium text-lg text-center text-gray-400 bg-gray-200 border-2 border-gray-500/60 shadow-md rounded-sm py-2 ">
+                <p className="mb-10 w-full font-medium text-lg text-center text-gray-400 bg-gray-200 border-2 border-gray-500/60 shadow-md rounded-sm py-2 px-8 overflow-auto ">
                   {router.query.id}
                 </p>
                 <div className=" flex justify-center w-full">
@@ -94,8 +96,10 @@ const QuizCreate = () => {
               </div>
             </section>
           </div>
-          <div className="col-span-3 px-4 py-4 relative">
-            <div className="bg-gray-600 h-40 sticky top-12 "></div>
+          <div className="col-span-3 px-4 py-4 relative hidden lg:flex">
+            <div className="bg-gray-600 h-40 sticky top-12 w-full flex justify-center items-center text-white  ">
+              Reklamlar
+            </div>
           </div>
         </div>
       </main>
