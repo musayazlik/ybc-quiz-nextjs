@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex justify-center items-center h-screen flex-col">
-        <h1 className="mb-10 font-maxbold text-6xl underline decoration-sky-500 decoration-6 ">
+        <h1 className="mb-8 sm:mb-10 xl:mb-20 font-maxbold text-4xl sm:text-6xl xl:text-7xl underline decoration-sky-500 decoration-6 ">
           Hoşgeldiniz...
         </h1>
         <Link
