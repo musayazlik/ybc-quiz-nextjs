@@ -16,7 +16,7 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user
         setUser(user)
-        console.log(user)
+
         //router.push("/dashboard")
       })
       .catch((error) => {

@@ -5,6 +5,7 @@ import { set, ref, push } from "firebase/database"
 import { uid } from "uid"
 import Swal from "sweetalert2"
 import { useRouter } from "next/router"
+import Link from "next/link"
 
 const Create = () => {
   const router = useRouter()
@@ -13,7 +14,6 @@ const Create = () => {
     const question = e.target.question.value
     const answer1 = e.target.answer1.value
     const answer2 = e.target.answer2.value
-
     const uudi = uid(10)
 
     if (question === "" || answer1 === "" || answer2 === "") {
@@ -27,7 +27,7 @@ const Create = () => {
     }
 
     const questionSet = {
-      questionId: 1,
+      questionId: uudi,
       question: question,
       answers: [answer1, answer2],
     }
@@ -109,6 +109,11 @@ const Create = () => {
               <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2 duration-300">
                 Created Question
               </button>
+              <Link
+                href={"/dashboard/questions"}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2 ml-2">
+                Cancel
+              </Link>
             </div>
           </form>
         </div>

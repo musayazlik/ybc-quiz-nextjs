@@ -5,6 +5,7 @@ import { set, ref, child, update, get } from "firebase/database"
 import { uid } from "uid"
 import Swal from "sweetalert2"
 import { useRouter } from "next/router"
+import Link from "next/link"
 
 const Update = ({ questionData }) => {
   const { query, push } = useRouter()
@@ -97,6 +98,11 @@ const Update = ({ questionData }) => {
               <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2">
                 Update Question
               </button>
+              <Link
+                href={"/dashboard/questions"}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2 ml-2">
+                Cancel
+              </Link>
             </div>
           </form>
         </div>

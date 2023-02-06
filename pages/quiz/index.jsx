@@ -16,10 +16,10 @@ const Quiz = () => {
 
   return (
     <div className="home w-screen h-screen flex justify-center items-center flex-col">
-      <h1 className="mb-10 font-maxbold text-6xl underline decoration-sky-500 decoration-6 ">
+      <h1 className="mb-8 sm:mb-10 xl:mb-20 font-maxbold text-4xl sm:text-6xl xl:text-7xl underline decoration-sky-500 decoration-6 ">
         {t.welcome}
       </h1>
-      <p className="mb-10 font-semibold text-2xl text-center flex flex-col">
+      <p className="mb-10 px-4 font-semibold text-xl sm:text-3xl text-center flex flex-col">
         {parse(t.quizpagep)}
       </p>
 

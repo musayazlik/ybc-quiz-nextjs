@@ -6,23 +6,10 @@ import React from "react"
 import DashboardLayout from "../layout"
 import Link from "next/link"
 import { db } from "@/libs/firebase"
-import { ref, onValue, remove } from "firebase/database"
+import { ref, remove, get } from "firebase/database"
 import Swal from "sweetalert2"
 
-const Questions = () => {
-  const [questions, setQuestions] = React.useState([])
-  React.useEffect(() => {
-    const dbRef = ref(db, "/questions")
-    onValue(dbRef, (snapshot) => {
-      const data = snapshot.val()
-      const questions = []
-      for (let id in data) {
-        questions.push({ id, ...data[id] })
-        setQuestions(questions)
-      }
-    })
-  }, [])
-
+const Questions = ({ questions }) => {
   const deleteQuestion = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -153,3 +140,14 @@ const Questions = () => {
 }
 
 export default Questions
+
+export async function getServerSideProps() {
+  const dbRef = await ref(db, "/questions")
+  const snapshot = await get(dbRef)
+  const questions = Object.values(snapshot.val())
+  return {
+    props: {
+      questions,
+    },
+  }
+}
