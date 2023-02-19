@@ -21,3 +21,7 @@ details > summary::-webkit-details-marker {
 .quizPool input:checked + label span {
   @apply bg-violet-900 text-white border-violet-800;
 }
+
+.quizSolveInput input:checked {
+  @apply bg-gray-400 border-gray-200;
+}
