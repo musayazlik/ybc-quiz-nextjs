@@ -1,7 +1,19 @@
 import Head from "next/head"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { tr, en, lang } from "@/lang/langT"
+import { useState } from "react"
 
 export default function Home() {
+  const router = useRouter()
+  const { locale } = router
+  const t = locale === lang.en ? en : tr
+  const [quizId, setQuizId] = useState("")
+
+  const handleQuizId = (e) => {
+    setQuizId(e.target.value)
+  }
+
   return (
     <>
       <Head>
@@ -10,15 +22,42 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex justify-center items-center h-screen flex-col">
-        <h1 className="mb-8 sm:mb-10 xl:mb-20 font-maxbold text-4xl sm:text-6xl xl:text-7xl underline decoration-sky-500 decoration-6 ">
-          Hoşgeldiniz...
-        </h1>
-        <Link
-          href={"/quiz"}
-          className="border-4 border-violet-700 px-8 py-4 rounded-lg shadow-lg shadow-violet-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-violet-400/50 bg-violet-500  text-violet-800 ">
-          Free Quiz
-        </Link>
+      <main className="md:container px-4">
+        <div className="flex flex-col items-center justify-center mt-16">
+          <h1 className="mb-8 sm:mb-10 xl:mb-20 font-maxbold text-4xl sm:text-6xl xl:text-7xl underline decoration-sky-500 decoration-6 ">
+            {t.welcome}
+          </h1>
+          <Link
+            href={"/quiz"}
+            className="border-4 border-violet-700 px-8 py-4 rounded-lg shadow-lg shadow-violet-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-violet-400/50 bg-violet-500  text-violet-800 ">
+            {t.start}
+          </Link>
+        </div>
+
+        <div className=" grid grid-cols-6 mt-16 w-full place-content-center">
+          <div className="col-span-6 md:col-start-2 md:col-span-4 flex  flex-col items-center gap-5 ">
+            <label
+              htmlFor="quizStatus"
+              className="flex flex-col text-2xl font-black w-full text-center underline decoration-cyan-600 decoration-2 ">
+              Quiz Durumu
+            </label>
+            <input
+              type="text"
+              name="quizStatus"
+              id="quizStatus"
+              className="border-2 border-gray-300 py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent font-semibold text-lg max-w-md "
+              placeholder="Quiz Id Giriniz."
+              onChange={(e) => {
+                handleQuizId(e)
+              }}
+            />
+            <Link
+              href={`/quizstatus/${quizId}`}
+              className="border-[3px] border-cyan-700 px-8 py-3 rounded-lg shadow-lg shadow-cyan-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-cyan-400/50 bg-cyan-500  text-cyan-800 ">
+              Göster
+            </Link>
+          </div>
+        </div>
       </main>
     </>
   )

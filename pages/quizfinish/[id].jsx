@@ -56,7 +56,7 @@ const QuizCreate = () => {
                 bağlantıyı kopyalayın.
               </p>
               <p className="mb-10 font-medium text-lg text-center text-gray-400 bg-gray-200 border-2 border-gray-500/60 shadow-md rounded-sm py-2 overflow-auto px-8 ">
-                {`${process.env.NEXT_PUBLIC_APP_URL}/quizsolve/${router.query.id}`}
+                {`${process.env.NEXT_PUBLIC_APP_URL}/quizsolve?id=${router.query.id}`}
               </p>
 
               <div className="flex justify-center">
@@ -64,7 +64,7 @@ const QuizCreate = () => {
                   className="px-4 py-2 border-[3px] border-blue-800 bg-blue-600 text-blue-800 shadow-lg shadow-blue-600/50 hover:shadow-xl hover:shadow-blue-600/50 duration-300 hover:scale-110 rounded-sm font-semibold text-xl"
                   onClick={() =>
                     urlCopy(
-                      `${process.env.NEXT_PUBLIC_APP_URL}/quizsolve/${router.query.id}`
+                      `${process.env.NEXT_PUBLIC_APP_URL}/quizsolve?id=${router.query.id}`
                     )
                   }>
                   Kopyala
