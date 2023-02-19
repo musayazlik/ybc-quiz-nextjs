@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^1.0.0-beta.6",
     "dotenv": "^16.0.3",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "firebase": "^9.16.0",
     "html-react-parser": "^3.0.8",
+    "iyzipay": "^2.0.48",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
