@@ -1,11 +1,12 @@
 import React from "react"
-import { tr, en, lang } from "@/lang/langT"
+import { lang } from "@/lang/langT"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { get, ref, update } from "firebase/database"
 import { db } from "@/libs/firebase"
 import Swal from "sweetalert2"
 import { GiQueenCrown } from "react-icons/gi"
+import { IoChevronBack } from "react-icons/io5"
 
 const QuizSolve = ({ id, quizData }) => {
   const [quizTestStatus, setQuizTestStatus] = React.useState(false)
@@ -17,7 +18,7 @@ const QuizSolve = ({ id, quizData }) => {
   const [quizValue, setQuizValue] = React.useState({})
   const router = useRouter()
   const { locale } = router
-  const t = locale === lang.en ? en : tr
+  const t = lang(locale)
 
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
@@ -82,10 +83,10 @@ const QuizSolve = ({ id, quizData }) => {
     }).then(() => {
       Swal.fire({
         icon: "success",
-        title: "Quiz başarıyla düzenlenebilir hale getirildi",
+        title: t.quizSolve.solved.alerts.success.quizEditStatus.title,
         showConfirmButton: true,
-
-        confirmButtonText: "Tamam",
+        confirmButtonText:
+          t.quizSolve.solved.alerts.success.quizEditStatus.button,
       }).then(() => {
         router.push(`quizsolve?id=${id}`)
       })
@@ -132,19 +133,20 @@ const QuizSolve = ({ id, quizData }) => {
               </span>
             </p>
 
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-8">
               <Link
                 href={"/"}
-                className="border-4 border-violet-700 px-8 py-4 rounded-lg shadow-lg shadow-violet-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-violet-400/50 bg-violet-500  text-violet-800 ">
-                {t.quizSolve.solved.button}
+                className="border-4 border-zinc-700 pl-4 pr-7 py-4 rounded-lg shadow-lg shadow-zinc-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-zinc-400/50 bg-zinc-500  text-zinc-800 flex gap-4 items-center ">
+                <IoChevronBack fontSize={28} />
+                {t.quizSolve.buttons.backHome}
               </Link>
               <button
-                className="border-4 border-emerald-700 px-8 py-4 rounded-lg shadow-lg shadow-emerald-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-emerald-400/50 bg-emerald-500  text-emerald-800 relative "
+                className="border-4 border-yellow-700 px-8 py-4 rounded-lg shadow-lg shadow-yellow-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-yellow-400/50 bg-yellow-500  text-yellow-800 relative "
                 onClick={quizEditStatus}>
-                {t.quizSolve.solved.buttonEdit}
+                {t.quizSolve.buttons.edit}
                 <span>
                   <GiQueenCrown
-                    className="inline-block ml-2 absolute -top-4 -right-4 bg-emerald-600 text-white p-1 rounded-md border-[3px] shadow-lg shadow-emerald-700 border-emerald-700 "
+                    className="inline-block ml-2 absolute -top-4 -right-4 bg-yellow-600 text-white p-1 rounded-md border-[3px] shadow-lg shadow-yellow-700 border-yellow-700 "
                     fontSize={32}
                   />
                 </span>
@@ -161,7 +163,7 @@ const QuizSolve = ({ id, quizData }) => {
           <div className="container grid grid-cols-12 place-content-center h-screen w-full">
             <div className="col-span-3 px-4 py-4 relative hidden lg:flex">
               <div className="bg-gray-600 h-40 sticky top-12 w-full flex justify-center items-center text-white ">
-                Reklamlar
+                {t.ads}
               </div>
             </div>
             <div className=" w-full col-span-6 px-6">
@@ -225,28 +227,28 @@ const QuizSolve = ({ id, quizData }) => {
                   <button
                     className="bg-red-500 border-b-4 border-red-600 text-white font-bold py-2 px-4 rounded hover:scale-110 shadow-lg hover:shadow-red-500/50 duration-300"
                     onClick={handlePrevQuestion}>
-                    Önceki Soru
+                    {t.quizSolve.buttons.previous}
                   </button>
                 )}
                 {currentQuestion < questions.length - 1 && (
                   <button
                     className="bg-green-500 border-b-4 border-green-600 text-white font-bold py-2 px-4 rounded hover:scale-110 shadow-lg hover:shadow-green-500/50 duration-300"
                     onClick={handleNextQuestion}>
-                    Sonraki Soru
+                    {t.quizSolve.buttons.next}
                   </button>
                 )}
                 {currentQuestion === questions.length - 1 && (
                   <button
                     className="bg-cyan-500 border-b-4 border-cyan-600 text-white font-bold py-2 px-4 rounded hover:scale-110 shadow-lg hover:shadow-cyan-500/50 duration-300"
                     onClick={handleFinish}>
-                    Testi Bitir
+                    {t.quizSolve.buttons.finish}
                   </button>
                 )}
               </div>
             </div>
             <div className="col-span-3 px-4 py-4 relative hidden lg:flex">
               <div className="bg-gray-600 h-40 sticky top-12 w-full flex justify-center items-center text-white ">
-                Reklamlar
+                {t.ads}
               </div>
             </div>
           </div>
