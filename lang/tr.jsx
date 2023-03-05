@@ -1,6 +1,15 @@
 export default {
-  welcome: "Hoşgeldiniz...",
-  start: "Quiz'e Başla",
+  quizHome: {
+    title: "Quiz Zamanı",
+    description:
+      "Sevgiliniz, Eşiniz veya Arkadaşınız ile aranızdaki ilişkiyi test edebileceğiniz en iyi uygulamayı yaptık.",
+    keywords:
+      "Sevgili, Eş, Arkadaş, Quiz, İlişki, Test, Sevgili Testi, Eş Testi, Arkadaş Testi, Quiz Zamanı, Quiz Zamanı Uygulaması, Quiz Zamanı Testi, Quiz Zamanı",
+    button: "Quiz'e Başla",
+    quizStatus: "Quiz Durumu",
+    quizStatusPlaceholder: "Quiz Id Giriniz.",
+    quizStatusButton: "Göster",
+  },
   quizpagep: `Sevgiliniz, Eşiniz veya Arkadaşınız<br /><span> ile aranızdaki <span className="text-red-500  underline decoration-red-500 decoration-6">ilişkiyi</span></span>test edebileceğiniz en iyi uygulamayı yaptık.`,
   quizpagebutton: "Ücretsiz bir quiz başlat",
   createQuiz: {
@@ -13,7 +22,14 @@ export default {
     subtitle1: "Şimdi bir quiz çözme zamanı...",
     subtitle1Edit: "Şimdi quizi düzenleme zamanı...",
     subtitle2: "Bu Quiz çoktan seçmeli ve açık uçlu sorulardan oluşmaktadır.",
-    button: "Quiz'i Çözmeye Başla",
+    buttons: {
+      start: "Quiz'i Çözmeye Başla",
+      edit: "Quiz'i Düzenle",
+      next: "Sonraki",
+      previous: "Önceki",
+      finish: "Bitir",
+      backHome: "Anasayfaya Dön",
+    },
     error: {
       title: "Quiz Bulunamadı",
       subtitle1: "Üzgünüz, bu quiz bulunamadı.",
@@ -25,7 +41,6 @@ export default {
       subtitle: "Bu quiz zaten çözülmüş.",
       button: "Ana Sayfaya Dön",
       buttonEdit: "Quiz'i Düzenle",
-
       alerts: {
         error: {
           title: "Hata!",
@@ -37,6 +52,10 @@ export default {
           subtitle: "Quiz başarıyla çözüldü.",
           subtitleEdit: "Quiz başarıyla düzenlendi.",
           button: "Tamam",
+          quizEditStatus: {
+            title: "Quiz başarıyla düzenlenebilir hale getirildi",
+            button: "Tamam",
+          },
         },
       },
     },
@@ -45,7 +64,7 @@ export default {
     title: "Quiz Oluştur",
     subtitle: "Şimdi bir quiz oluşturma zamanı...",
     subtitle2: "Bu Quiz çoktan seçmeli ve açık uçlu sorulardan oluşmaktadır.",
-    button: "Quiz'i Oluştur",
+    createQuiz: "Quiz'i Oluştur",
     personalInformation: {
       title: "Kişisel Bilgiler",
       subtitle:
@@ -89,4 +108,5 @@ export default {
       },
     },
   },
+  ads: "Reklamlar",
 }

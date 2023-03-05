@@ -1,6 +1,15 @@
 export default {
-  welcome: "Welcome...",
-  start: "Start Quiz",
+  quizHome: {
+    title: "Quiz Time",
+    description:
+      "We have made the best application where you can test the relationship between you and your lover, spouse or friend.",
+    keywords: "quiz, relationship, love, spouse, friend, lover, test",
+    button: "Start Quiz",
+    quizStatus: "Quiz Status",
+    quizStatusPlaceholder: "Enter Quiz Id.",
+    quizStatusButton: "Show",
+  },
+
   quizpagep: `Your lover, spouse or friend <br /><span>to test the <span className="text-red-500  underline decoration-red-500 decoration-6">relationship</span> </span>between you and your partner.`,
   quizpagebutton: "Start a free quiz",
   quizSolve: {
@@ -10,6 +19,14 @@ export default {
     subtitle2:
       "This Quiz consists of multiple choice and open-ended questions.",
     button: "Start Solving Quiz",
+    buttons: {
+      start: "Start Solving Quiz",
+      edit: "Edit Quiz",
+      next: "Next",
+      previous: "Previous",
+      finish: "Finish",
+      backHome: "Back to Home",
+    },
     error: {
       title: "Quiz Not Found",
       subtitle1: "Sorry, this quiz was not found.",
@@ -33,6 +50,10 @@ export default {
           subtitle: "Quiz solved successfully.",
           subtitleEdit: "Quiz edited successfully.",
           button: "Okay",
+          quizEditStatus: {
+            title: "Quiz successfully made editable.",
+            button: "Okay",
+          },
         },
       },
     },
@@ -42,7 +63,7 @@ export default {
     subtitle: "Now it's time to create a quiz...",
     subtitle2:
       "This Quiz consists of multiple choice and open-ended questions.",
-    button: "Create Quiz",
+    createQuiz: "Create Quiz",
     personalInformation: {
       title: "Personal Information",
       subtitle:
@@ -87,4 +108,6 @@ export default {
       },
     },
   },
+
+  ads: "Ads",
 }
