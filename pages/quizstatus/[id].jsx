@@ -4,7 +4,6 @@ import { tr, en, lang } from "@/lang/langT"
 import { get, child, ref } from "firebase/database"
 import { useRouter } from "next/router"
 import { db } from "@/libs/firebase"
-import Swal from "sweetalert2"
 import { GiCrown } from "react-icons/gi"
 
 const QuizStatus = ({ questionData }) => {
@@ -25,7 +24,7 @@ const QuizStatus = ({ questionData }) => {
           <div className="grid grid-cols-12">
             <div className="col-span-6 col-start-4 pt-16">
               <h1 className="mb-10 font-maxbold text-4xl sm:text-5xl text-center underline underline-offset-4 decoration-sky-500 decoration-4 ">
-                Quiz Status
+                {t.quizStatus.title}
               </h1>
               <div className="inline-flex justify-center items-center w-full flex-col">
                 <p className="text-center border inline-block px-6 py-2 mb-6 shadow-lg shadow-slate-300/50 border-slate-400 bg-slate-200 font-semibold text-slate-600 hover:scale-110 duration-300 cursor-pointer">
@@ -33,7 +32,7 @@ const QuizStatus = ({ questionData }) => {
                 </p>
 
                 <p className="px-12 text-center mt-2 shadow-lg py-3 shadow-red-300/50 border-red-400 bg-red-200 font-semibold text-red-600 hover:scale-110 duration-300 cursor-pointer border-2 animate-bounce">
-                  Quiz Bulunamadı.
+                  {t.quizStatus.error.subtitle}
                 </p>
               </div>
             </div>
@@ -48,7 +47,7 @@ const QuizStatus = ({ questionData }) => {
           <div className="grid grid-cols-12">
             <div className="col-span-8 col-start-3 pt-16">
               <h1 className="mb-10 font-maxbold text-4xl sm:text-5xl text-center underline underline-offset-4 decoration-sky-500 decoration-4 ">
-                Quiz Status
+                {t.quizStatus.title}
               </h1>
               <div className="flex justify-center">
                 <p className="text-center border inline-block px-6 py-2 mb-3 shadow-lg shadow-slate-300/50 border-slate-400 bg-slate-200 font-semibold text-slate-600 ">
@@ -58,22 +57,17 @@ const QuizStatus = ({ questionData }) => {
 
               {questionData.oppositeStatus === false ? (
                 <p className="text-center mt-2 shadow-lg py-2 shadow-amber-300/50 border-amber-400 bg-amber-200 font-semibold text-amber-600 hover:scale-110 duration-300 cursor-pointer border-2 animate-bounce px-6 ">
-                  Henüz partneriniz hazırlamış olduğunuz soruları{" "}
-                  <span className="underline-offset-4 underline decoration-wavy font-black">
-                    cevaplamamış
-                  </span>{" "}
-                  durumda.
+                  {t.quizStatus.warning.subtitle}
                 </p>
               ) : (
                 <>
                   <div className="mb-20 bg-slate-50 pb-4">
                     <div className="">
                       <p className="text-center mt-2 mb-3 shadow-lg py-2 shadow-green-300/50 border-green-400 bg-green-200 font-semibold text-green-600  cursor-pointer border-2 animate-bounce ">
-                        Partneriniz hazırlamış olduğunuz soruları cevaplamış
-                        durumda.
+                        {t.quizStatus.success.subtitle}
                       </p>
                       <p className="text-center font-semibold">
-                        Aşağıda cevaplarını görebilirsiniz.
+                        {t.quizStatus.success.subtitle1}
                       </p>
                     </div>
                     {/* Test Sorular */}
@@ -133,15 +127,15 @@ const QuizStatus = ({ questionData }) => {
                             <div className="absolute left-0 top-0 w-full bg-yellow-400/60 h-80 rounded-lg flex justify-center items-center px-8 backdrop-blur-sm flex-col gap-6">
                               <p className="flex flex-col text-center font-semibold gap-6 text-yellow-700">
                                 <span className="text-xl">
-                                  Klasik Soruların cevaplarını görmek için
+                                  {t.quizStatus.premium.text}
                                 </span>
                                 <span className="font-maxbold text-3xl flex items-center gap-4 justify-center">
                                   <GiCrown fontSize={40} />
-                                  Premium Üyelik
+                                  {t.quizStatus.premium.textPremium}
                                 </span>
                                 <span className="text-xl">
                                   {" "}
-                                  satın almanız gerekmektedir.
+                                  {t.quizStatus.premium.text2}
                                 </span>
                               </p>
                               <button
@@ -149,7 +143,7 @@ const QuizStatus = ({ questionData }) => {
                                   submitPayments()
                                 }}
                                 className=" bottom-0 left-0 right-0 mx-auto mb-4 px-8 py-3 bg-yellow-500/60 border-2 border-yellow-600 text-yellow-700 font-semibold rounded-lg shadow-lg hover:scale-110 duration-300">
-                                Premium Üyelik Satın Al
+                                {t.quizStatus.premium.button}
                               </button>
                             </div>
                             <p>fsdfdsfdsfsdfdfff</p>

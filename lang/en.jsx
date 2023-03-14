@@ -109,5 +109,42 @@ export default {
     },
   },
 
+  quizFinish: {
+    title: "Quiz Finished",
+    subtitle:
+      "Quiz created successfully. Copy the link below to share your quiz.",
+    subtitle2:
+      "It will be necessary to see your partner's answers to the quiz you have created.",
+    button: "Go to Home",
+    copy: "Copy",
+    copySuccess: "Copied!",
+    copySuccessText: "Link copied to clipboard.",
+    textWarning: "You can only copy the quiz once.",
+  },
+
+  quizStatus: {
+    title: "Quiz Status",
+    subtitle: "Enter the quiz id to see the quiz status.",
+    button: "Show",
+    error: {
+      title: "Quiz Not Found",
+      subtitle: "Sorry, this quiz was not found.",
+      button: "Back to Quiz",
+    },
+    warning: {
+      subtitle: "This quiz has not been solved yet.",
+    },
+    success: {
+      subtitle: "Your partner answered the questions you prepared case.",
+      subtitle1: "You can see the answers below.",
+    },
+    premium: {
+      text: "To see the answers to the Classic Questions",
+      textPremium: "Premium Membership",
+      text2: "you need to be a premium member.",
+      button: "Buy Premium Membership",
+    },
+  },
+
   ads: "Ads",
 }

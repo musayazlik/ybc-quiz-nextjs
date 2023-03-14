@@ -108,5 +108,17 @@ export default {
       },
     },
   },
+  quizFinish: {
+    title: "Quiz Tamamlandı",
+    subtitle:
+      "Quiz tamamlandı. Şimdi quizinizi arkadaşlarınızla paylaşabilirsiniz.",
+    subtitle2:
+      "Quizinizi arkadaşlarınızla paylaşmak için aşağıdaki butona tıklayın.",
+    button: "Quiz'i Paylaş",
+    copy: "Kopyala",
+    copySuccess: "Kopyalama Başarılı",
+    copySuccessText: "Link panoya kopyalandı.",
+    textWarning: "Aşağıdaki id'yi saklayınız.",
+  },
   ads: "Reklamlar",
 }
