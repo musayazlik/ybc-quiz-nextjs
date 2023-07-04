@@ -1,5 +1,5 @@
 import "@/styles/globals.css"
-import { Wrapper } from "./context"
+import { Wrapper } from "../context/context"
 
 export default function App({ Component, pageProps }) {
   return (

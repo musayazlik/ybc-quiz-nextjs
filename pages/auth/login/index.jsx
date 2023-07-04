@@ -2,7 +2,7 @@ import React from "react"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "@/libs/firebase"
 import { useRouter } from "next/router"
-import { useAppContext } from "@/pages/context"
+import { useAppContext } from "@/context/context"
 
 const Login = () => {
   const router = useRouter()
