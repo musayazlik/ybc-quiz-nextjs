@@ -7,7 +7,7 @@ import { ref, get, child } from "firebase/database"
 import Swal from "sweetalert2"
 import { HiOutlineChevronLeft } from "react-icons/hi"
 
-const Details = ({ quizData }) => {
+const Details = ({ quizData, quizDataId }) => {
   return (
     <>
       <DashboardLayout>
@@ -26,7 +26,7 @@ const Details = ({ quizData }) => {
             <input
               type="text"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
-              value={quizData?.quizId}
+              defaultValue={quizDataId}
               disabled
             />
           </div>
@@ -35,7 +35,7 @@ const Details = ({ quizData }) => {
             <input
               type="text"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
-              value={quizData?.firstUser}
+              defaultValue={quizData?.firstUser}
               disabled
             />
           </div>
@@ -44,7 +44,7 @@ const Details = ({ quizData }) => {
             <input
               type="text"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
-              value={quizData?.secondUser}
+              defaultValue={quizData?.secondUser}
               disabled
             />
           </div>
@@ -64,6 +64,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       quizData: quiz.val(),
+      quizDataId: id,
     },
   }
 }

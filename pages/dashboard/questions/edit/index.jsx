@@ -75,7 +75,7 @@ const Update = ({ questionData }) => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="answer1"
                   type="text"
-                  defaultValue={questionData.answers[0]}
+                  defaultValue={questionData?.answers[0]}
                   placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                 />
               </div>

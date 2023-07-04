@@ -58,6 +58,19 @@ export default {
           },
         },
       },
+
+      payment: {
+        title: "Premium Satın Al",
+        subtitle: "Bu Quiz'i düzenlemek için ödeme yapmanız gerekiyor.",
+        name: "Adınız",
+        surname: "Soyadınız",
+        email: "E-posta Adresiniz",
+        address: "Adresiniz",
+        city: "Şehir",
+        country: "Ülke",
+        button: "Ödeme Yap",
+        buttonEdit: "Quiz'i Düzenle",
+      },
     },
   },
   quizCreate: {

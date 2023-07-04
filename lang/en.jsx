@@ -56,6 +56,19 @@ export default {
           },
         },
       },
+
+      payment: {
+        title: "Buy Premium",
+        subtitle: "Please pay to see the answers to the quiz.",
+        name: "Name",
+        surname: "Surname",
+        email: "Email",
+        address: "Address",
+        city: "City",
+        country: "Country",
+        button: "Pay",
+        buttonEdit: "Edit Quiz",
+      },
     },
   },
   quizCreate: {

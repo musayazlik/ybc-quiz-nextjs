@@ -25,3 +25,9 @@ details > summary::-webkit-details-marker {
 .quizSolveInput input:checked {
   @apply bg-gray-400 border-gray-200;
 }
+
+@layer base {
+  .font-outline-2 {
+    -webkit-text-stroke: 2px #0000009a;
+  }
+}

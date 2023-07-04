@@ -5,12 +5,14 @@ import Link from "next/link"
 import { get, ref, update } from "firebase/database"
 import { db } from "@/libs/firebase"
 import Swal from "sweetalert2"
-import { GiQueenCrown } from "react-icons/gi"
+import { GiCrownCoin, GiQueenCrown } from "react-icons/gi"
 import { IoChevronBack } from "react-icons/io5"
+import axios from "axios"
 
 const QuizSolve = ({ id, quizData }) => {
   const [quizTestStatus, setQuizTestStatus] = React.useState(false)
   const [currentQuestion, setCurrentQuestion] = React.useState(0)
+  const [quizPaymentDropdown, setQuizPaymentDropdown] = React.useState(false)
   const [questions, setQuestions] = React.useState([
     ...quizData?.testQuestions,
     ...quizData?.classicQuestions,
@@ -76,21 +78,52 @@ const QuizSolve = ({ id, quizData }) => {
     }
   }
 
-  const quizEditStatus = () => {
-    update(ref(db, `quizzes/${id}`), {
-      oppositeStatus: false,
-      premiumSecondUser: true,
-    }).then(() => {
-      Swal.fire({
-        icon: "success",
-        title: t.quizSolve.solved.alerts.success.quizEditStatus.title,
-        showConfirmButton: true,
-        confirmButtonText:
-          t.quizSolve.solved.alerts.success.quizEditStatus.button,
-      }).then(() => {
-        router.push(`quizsolve?id=${id}`)
-      })
+  const quizEditStatus = (e) => {
+    e.preventDefault()
+
+    const name = e.target.name.value
+    const surname = e.target.surname.value
+    const email = e.target.email.value
+    const address = e.target.address.value
+    const city = e.target.city.value
+    const country = e.target.country.value
+
+    const data = {
+      name,
+      surname,
+      email,
+      address,
+      city,
+      country,
+      locale,
+    }
+
+    axios({
+      method: "POST",
+      url: "/api/payments",
+      data,
     })
+      .then((res) => {
+        window.location.href = res.data.data.paymentPageUrl
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    // update(ref(db, `quizzes/${id}`), {
+    //   oppositeStatus: false,
+    //   premiumSecondUser: true,
+    // }).then(() => {
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: t.quizSolve.solved.alerts.success.quizEditStatus.title,
+    //     showConfirmButton: true,
+    //     confirmButtonText:
+    //       t.quizSolve.solved.alerts.success.quizEditStatus.button,
+    //   }).then(() => {
+    //     router.push(`quizsolve?id=${id}`)
+    //   })
+    // })
   }
 
   if (!id || quizData === undefined) {
@@ -142,7 +175,7 @@ const QuizSolve = ({ id, quizData }) => {
               </Link>
               <button
                 className="border-4 border-yellow-700 px-8 py-4 rounded-lg shadow-lg shadow-yellow-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-yellow-400/50 bg-yellow-500  text-yellow-800 relative "
-                onClick={quizEditStatus}>
+                onClick={() => setQuizPaymentDropdown(true)}>
                 {t.quizSolve.buttons.edit}
                 <span>
                   <GiQueenCrown
@@ -154,6 +187,138 @@ const QuizSolve = ({ id, quizData }) => {
             </div>
           </section>
         </div>
+        {quizPaymentDropdown ? (
+          <>
+            <div
+              className="absolute min-h-screen py-20 top-0 left-0 w-full z-50 flex justify-center items-center 
+              ">
+              <div className="bg-yellow-200 w-full max-w-xl rounded-lg shadow-xl p-4 border-4 border-yellow-400 relative z-20 shadow-yellow-400/30">
+                <div className="flex justify-center">
+                  <div className="bg-white px-12 py-3  max-w-sm rounded-lg border-2 border-yellow-600   items-center h-24 shadow-lg shadow-yellow-700/30 flex justify-center gap-6">
+                    <div className="bg-yellow-400 p-2 rounded-lg border-b-4 border-yellow-600">
+                      <GiQueenCrown className="text-4xl text-yellow-100" />
+                    </div>
+                    <span className="flex gap-3 ">
+                      <p className="text-2xl font-semibold text-black/50 line-through ">
+                        $19.99
+                      </p>
+                      <p className="text-4xl font-semibold text-black ">
+                        $9.99
+                      </p>
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="text-center w-full my-8">
+                    <h1 className="text-4xl font-maxbold text-yellow-400 drop-shadow-md font-outline-2 ">
+                      {t.quizSolve.solved.payment.title}
+                    </h1>
+                    <p className="text-xl font-semibold text-yellow-800 drop-shadow-md ">
+                      {t.quizSolve.solved.payment.subtitle}
+                    </p>
+                  </div>
+                  <button
+                    className="text-2xl font-semibold absolute -top-2 -right-2 rounded-full bg-yellow-300 hover:bg-yellow-300 w-10 h-10 flex justify-center items-center
+                    border-4 border-yellow-400 text-yellow-600
+                    "
+                    onClick={() => setQuizPaymentDropdown(false)}>
+                    X
+                  </button>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <form
+                    onSubmit={(e) => {
+                      quizEditStatus(e)
+                    }}
+                    className="flex flex-col gap-3 py-4 justify-center items-center w-full">
+                    <div className="flex  gap-2 w-full max-w-sm">
+                      <div className="flex flex-col gap-2 w-full max-w-sm">
+                        <label htmlFor="name" className="font-semibold">
+                          {t.quizSolve.solved.payment.name}
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          className="border-2 border-yellow-600 rounded-lg px-4 py-2 focus:outline-none focus:border-violet-500  w-full placeholder:text-black/50"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2 w-full max-w-sm">
+                        <label htmlFor="surname" className="font-semibold">
+                          {t.quizSolve.solved.payment.surname}
+                        </label>
+                        <input
+                          type="text"
+                          name="surname"
+                          id="surname"
+                          className="border-2 border-yellow-600 rounded-lg px-4 py-2 focus:outline-none focus:border-violet-500  w-full placeholder:text-black/50"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 w-full max-w-sm">
+                      <label htmlFor="email" className="font-semibold">
+                        {t.quizSolve.solved.payment.email}
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        className="border-2 border-yellow-600 rounded-lg px-4 py-2 focus:outline-none focus:border-violet-500 w-full placeholder:text-black/50"
+                        placeholder="johndoegmail.com"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 w-full max-w-sm">
+                      <label htmlFor="address" className="font-semibold">
+                        {t.quizSolve.solved.payment.address}
+                      </label>
+                      <input
+                        type="text"
+                        name="address"
+                        id="address"
+                        className="border-2 border-yellow-600 rounded-lg px-4 py-2 focus:outline-none focus:border-violet-500 w-full placeholder:text-black/50"
+                        placeholder="104 S Main St #302"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2 w-full max-w-sm">
+                      <label htmlFor="city" className="font-semibold">
+                        {t.quizSolve.solved.payment.city}
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        id="city"
+                        className="border-2 border-yellow-600 rounded-lg px-4 py-2 focus:outline-none focus:border-violet-500 w-full placeholder:text-black/50"
+                        placeholder="Fond du Lac"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2 w-full max-w-sm mb-8">
+                      <label htmlFor="country" className="font-semibold">
+                        {t.quizSolve.solved.payment.country}
+                      </label>
+                      <input
+                        type="text"
+                        name="country"
+                        id="country"
+                        className="border-2 border-yellow-600 rounded-lg px-4 py-2 focus:outline-none focus:border-violet-500 w-full placeholder:text-black/50"
+                        placeholder="West Virginia"
+                      />
+                    </div>
+
+                    <button className="border-4 border-yellow-700 px-16 py-3 rounded-lg shadow-lg shadow-yellow-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-yellow-400/50 bg-yellow-500  text-yellow-800 relative ">
+                      {t.quizSolve.solved.payment.button}
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <span
+                className="absolute top-0 left-0 w-full h-full bg-yellow-100/80 z-10"
+                onClick={() => setQuizPaymentDropdown(false)}></span>
+            </div>
+          </>
+        ) : null}
       </>
     )
   } else {

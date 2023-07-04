@@ -8,8 +8,14 @@ import Link from "next/link"
 import { db } from "@/libs/firebase"
 import { ref, remove, get } from "firebase/database"
 import Swal from "sweetalert2"
+import {
+  AiFillPlusCircle,
+  AiTwotoneDelete,
+  AiTwotoneEdit,
+} from "react-icons/ai"
 
-const Questions = ({ questions }) => {
+const Questions = ({ data }) => {
+  const [questions, setQuestions] = React.useState(data)
   const deleteQuestion = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -30,6 +36,11 @@ const Questions = ({ questions }) => {
               timer: 1500,
               showConfirmButton: false,
             })
+
+            const newQuestions = questions.filter(
+              (question) => question.id !== id
+            )
+            setQuestions(newQuestions)
           })
           .catch((err) => {
             Swal.fire({
@@ -50,7 +61,8 @@ const Questions = ({ questions }) => {
         <div className="flex justify-end mr-2">
           <Link
             href={"/dashboard/questions/create"}
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2 duration-300">
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded mb-2 duration-300 flex items-center">
+            <AiFillPlusCircle className="inline-block mr-2" />
             Add Question
           </Link>
         </div>
@@ -61,15 +73,14 @@ const Questions = ({ questions }) => {
                 <TableTh text="ID" />
                 <TableTh text="Questions" customClass={"w-5/12"} />
                 <TableTh text="Answers" customClass={"w-5/12"} />
-                <TableTh text="Edit" />
-                <TableTh text="Delete" />
+                <TableTh text="" />
               </tr>
             </thead>
             <tbody className="flex-1 sm:flex-none">
               {questions.map((question, index) => (
                 <tr
                   key={question.id}
-                  className="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 whitespace-normal">
+                  className="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 whitespace-normal h-full">
                   <TableTd text={index + 1} />
                   <TableTd text={question.question} customClass="break-all" />
                   <td className="border-grey-light border hover:bg-gray-100 p-3">
@@ -79,20 +90,20 @@ const Questions = ({ questions }) => {
                       ))}
                     </ul>
                   </td>
-                  <td className="border-grey-light border hover:bg-gray-100 p-3">
+                  <td className="border-grey-light border hover:bg-gray-100 px-3 py-4 flex gap-3 h-full">
                     <Link
                       href={{
                         pathname: "/dashboard/questions/edit",
                         query: { id: question.id },
                       }}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-cyan-600 hover:bg-cyan-700 duration-300 text-white font-bold py-2 px-4  rounded flex gap-2 items-center">
+                      <AiTwotoneEdit />
                       Edit
                     </Link>
-                  </td>
-                  <td className="border-grey-light border hover:bg-gray-100 p-3">
                     <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4  rounded flex gap-2 items-center"
                       onClick={() => deleteQuestion(question.id)}>
+                      <AiTwotoneDelete />
                       Delete
                     </button>
                   </td>
@@ -144,10 +155,22 @@ export default Questions
 export async function getServerSideProps() {
   const dbRef = await ref(db, "/questions")
   const snapshot = await get(dbRef)
-  const questions = Object.values(snapshot.val())
+  const questions = []
+
+  if (snapshot.exists()) {
+    const data = snapshot.val()
+    for (const key in data) {
+      questions.push({
+        id: key,
+        question: data[key].question,
+        answers: data[key].answers,
+      })
+    }
+  }
+
   return {
     props: {
-      questions,
+      data: questions,
     },
   }
 }

@@ -73,7 +73,7 @@ const Create = () => {
                   id="question"
                   type="text"
                   required
-                  placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                  placeholder="Write the question..."
                 />
               </div>
               <div className="w-full px-3 mb-4 ">
@@ -87,7 +87,7 @@ const Create = () => {
                   id="answer1"
                   type="text"
                   required
-                  placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                  placeholder="Type the 1st answer."
                 />
               </div>
               <div className="w-full px-3 mb-4 ">
@@ -101,7 +101,7 @@ const Create = () => {
                   id="answer2"
                   type="text"
                   required
-                  placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                  placeholder="Type the 2st answer."
                 />
               </div>
             </div>

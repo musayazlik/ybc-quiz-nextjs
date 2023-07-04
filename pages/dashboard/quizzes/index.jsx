@@ -7,6 +7,7 @@ import { ref, onValue, remove } from "firebase/database"
 import Swal from "sweetalert2"
 import TableTh from "@/components/dashboard/table/tableth"
 import TableTd from "@/components/dashboard/table/tabletd"
+import { AiTwotoneDelete, AiFillInfoCircle } from "react-icons/ai"
 
 const Quizzes = () => {
   const [quizzes, setQuizzes] = React.useState([])
@@ -55,6 +56,8 @@ const Quizzes = () => {
     })
   }
 
+  console.log(quizzes)
+
   return (
     <>
       <DashboardLayout>
@@ -64,11 +67,10 @@ const Quizzes = () => {
           <Table>
             <thead className="text-white">
               <tr className="bg-slate-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-                <TableTh text="ID" customClass={"w-1/12"} />
+                <TableTh text="#" customClass={"w-1/12"} />
                 <TableTh text="First User" customClass={"w-5/12"} />
                 <TableTh text="Last User" customClass={"w-5/12"} />
-                <TableTh text="Detail" customClass={"w-2/12"} />
-                <TableTh text="Delete" customClass={"w-2/12"} />
+                <TableTh text="" customClass={"w-2/12"} />
               </tr>
             </thead>
             <tbody className="flex-1 sm:flex-none">
@@ -76,23 +78,23 @@ const Quizzes = () => {
                 <tr
                   key={quiz.id}
                   className="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 whitespace-normal">
-                  <TableTd text={quiz.quizId} />
+                  <TableTd text={index + 1} />
                   <TableTd text={quiz.firstUser} customClass="break-all" />
                   <TableTd text={quiz.secondUser} customClass="break-all" />
-                  <td className="border-grey-light border hover:bg-gray-100 p-3">
+                  <td className="border-grey-light border hover:bg-gray-100 p-3 flex gap-3">
                     <Link
                       href={{
                         pathname: "/dashboard/quizzes/details",
                         query: { id: quiz.id },
                       }}
-                      className="bg-cyan-600 hover:bg-cyan-700 duration-300 text-white font-bold py-2 px-4 rounded">
-                      Edit
+                      className="bg-cyan-600 hover:bg-cyan-700 duration-300 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                      <AiFillInfoCircle />
+                      Detail
                     </Link>
-                  </td>
-                  <td className="border-grey-light border hover:bg-gray-100 p-3">
                     <button
-                      className="bg-red-500 hover:bg-red-700 duration-300 text-white font-bold py-2 px-4 rounded"
+                      className="bg-red-500 hover:bg-red-700 duration-300 text-white font-bold py-2 px-4 rounded flex gap-2 items-center"
                       onClick={() => deleteQuestion(quiz.id)}>
+                      <AiTwotoneDelete />
                       Delete
                     </button>
                   </td>
@@ -115,7 +117,7 @@ const Quizzes = () => {
                       pathname: "/dashboard/quizzes/",
                       query: { id: quiz.id },
                     }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    className="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded">
                     Detail
                   </Link>
                   <button

@@ -1,75 +1,182 @@
-import Iyzipay from "iyzipay"
+var Iyzipay = require("iyzipay")
+import { db } from "@/libs/firebase"
+import { set, ref, push } from "firebase/database"
+import Swal from "sweetalert2"
+import { uid } from "uid"
 
-export default function (req, res) {
+export default async function handler(req, res) {
+  const { method } = req
+
   let iyzipay = new Iyzipay({
     apiKey: process.env.IYZIPAY_API_KEY,
     secretKey: process.env.IYZIPAY_SECRET_KEY,
     uri: "https://sandbox-api.iyzipay.com",
   })
 
-  let request = {
-    locale: Iyzipay.LOCALE.EN,
-    conversationId: "123456789",
-    paidPrice: "100",
-    price: "100",
-    currency: Iyzipay.CURRENCY.USD,
-    basketId: "B67832",
-    paymentGroup: Iyzipay.PAYMENT_GROUP.LISTING,
-    paymentCard: {
-      cardHolderName: "John Doe",
-      cardNumber: "4054180000000007",
-      expireMonth: "12",
-      expireYear: "2030",
-      cvc: "123",
-      registerCard: 0,
-    },
-    enabledInstallments: [2, 3, 6, 9],
-    buyer: {
-      id: "BY789",
-      name: "John",
-      surname: "Doe",
-      gsmNumber: "+905350000000",
-      email: "email@email.com",
-      identityNumber: "74300864791",
-      lastLoginDate: "2015-10-05 12:43:35",
-      registrationDate: "2013-04-21 15:12:09",
-      registrationAddress: "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1",
-      ip: "85.34.78.112",
-      city: "Istanbul",
-      country: "Turkey",
-      zipCode: "34732",
-    },
-    shippingAddress: {
-      contactName: "Jane Doe",
-      city: "Istanbul",
-      country: "Turkey",
-      address: "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1",
-      zipCode: "34742",
-    },
-    billingAddress: {
-      contactName: "Jane Doe",
-      city: "Istanbul",
-      country: "Turkey",
-      address: "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1",
-      zipCode: "34742",
-    },
-    basketItems: [
-      {
-        id: "BI103",
-        name: "Usb",
-        category1: "Electronics",
-        category2: "Usb / Cable",
-        itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-        price: "100",
-      },
-    ],
-  }
+  switch (method) {
+    case "POST":
+      try {
+        if (req.body.token) {
+          res.status(200).json({ success: true, data: req.body })
+          let request = {
+            locale: Iyzipay.LOCALE.EN,
+            token: req.body.token,
+          }
+          iyzipay.checkoutForm.retrieve(request, async function (err, result) {
+            if (err) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: err.message,
+              })
+            } else {
+              const data = result
+              console.log(data)
 
-  iyzipay.payment.create(request, function (err, result) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.status(200).json(result)
-    }
-  })
+              // if (data.paymentStatus == "SUCCESS") {
+              //   await Order.updateOne(
+              //     { paymentToken: req.body.token },
+              //     {
+              //       paymentResult: true,
+              //       orderKey: orderKey,
+              //       paymentId: data.paymentId,
+              //     }
+              //   ).exec()
+
+              //   const orderDetail = await Order.findOne({
+              //     paymentToken: req.body.token,
+              //   })
+              //     .select(["email", "orderKey"])
+              //     .exec()
+
+              //   // E-posta gövdesi ve başlığı
+              //   const mailOptions = {
+              //     from: "info@interactspacez.com",
+              //     to: orderDetail.email,
+              //     subject: "TEST EMAIL",
+              //     text: `Your order key is ${orderDetail.orderKey}`,
+              //   }
+
+              //   // E-postayı gönder
+              //   transporter.sendMail(mailOptions, (error, info) => {
+              //     if (error) {
+              //       console.log(error)
+              //     } else {
+              //     }
+              //   })
+
+              //   res.writeHead(302, {
+              //     Location: "/payment/success",
+              //   })
+              //   res.end()
+              // } else {
+              //   res.redirect(process.env.APP_URL + "/payment/error")
+              // }
+            }
+          })
+        } else {
+          let price = req.body.locale === "tr" ? 9.99 * 19 : 9.99
+          let userId = uid(10)
+          let conversationId = uid(10)
+          let basketId = uid(10)
+
+          let basketItems = [
+            {
+              id: "BI101",
+              name: "Premium Package",
+              category1: "Package",
+              itemType: Iyzipay.BASKET_ITEM_TYPE.VIRTUAL,
+              price: price,
+            },
+          ]
+
+          let request = {
+            conversationId: conversationId,
+            price: price,
+            locale:
+              req.body.locale === "tr" ? Iyzipay.LOCALE.TR : Iyzipay.LOCALE.EN,
+            paidPrice: price,
+            currency:
+              req.body.locale === "tr"
+                ? Iyzipay.CURRENCY.TRY
+                : Iyzipay.CURRENCY.USD,
+            basketId: basketId,
+            paymentGroup: Iyzipay.PAYMENT_GROUP.LISTING,
+            callbackUrl: process.env.NEXT_PUBLIC_APP_URL + "/api/payments",
+            cancelUrl: process.env.NEXT_PUBLIC_APP_URL,
+            buyer: {
+              id: userId,
+              name: req.body.name,
+              surname: req.body.surname,
+              email: req.body.email,
+              identityNumber: "11111111111",
+              registrationAddress: req.body.address,
+              ip: "1.1.1.1",
+              city: req.body.city,
+              country: req.body.country,
+            },
+            shippingAddress: {
+              contactName: req.body.name + " " + req.body.surname,
+              city: req.body.city,
+              country: req.body.country,
+              address: req.body.address,
+            },
+            billingAddress: {
+              contactName: req.body.name + " " + req.body.surname,
+              city: req.body.city,
+              country: req.body.country,
+              address: req.body.address,
+            },
+            basketItems: basketItems,
+          }
+
+          iyzipay.checkoutFormInitialize.create(
+            request,
+            async function (err, result) {
+              if (err) {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Something went wrong!",
+                  footer: result.errorMessage,
+                })
+              } else {
+                const ordersSet = {
+                  conversationId,
+                  basketId,
+                  name: req.body.name,
+                  surname: req.body.surname,
+                  email: req.body.email,
+                  address: req.body.address,
+                  city: req.body.city,
+                  country: req.body.country,
+                  basketItems,
+                  paymentResult: false,
+                  paymentToken: result.token,
+                  totalPrice: price,
+                }
+
+                push(ref(db, "/orders"), ordersSet)
+                  .then(() => {
+                    console.log("Order added")
+                  })
+                  .catch((err) => {
+                    console.log(err)
+                  })
+                const data = result
+                res.status(200).json({ data })
+              }
+            }
+          )
+        }
+      } catch (error) {
+        res.status(400).json({ message: error.message })
+      }
+      break
+
+    default:
+      res.status(400).json({ message: "Bad Request" })
+      break
+  }
 }
