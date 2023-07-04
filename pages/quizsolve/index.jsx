@@ -351,6 +351,7 @@ const QuizSolve = ({ id, quizData }) => {
                                 question.answers.map((option, index) => {
                                   return (
                                     <label
+                                      key={index}
                                       className={`relative font-semibold duration-300 ${
                                         question.answer === index.toString()
                                           ? "bg-emerald-400 border-[3px] border-emerald-800/50 shadow-md shadow-emerald-400/50 rounded-sm text-white px-5 py-3 scale-110"
