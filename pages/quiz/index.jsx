@@ -32,7 +32,7 @@ const Quiz = () => {
 
         <div className="flex gap-6">
           <Link
-            href={"/quizcreate"}
+            href={"/quizCreate"}
             className="border-4 border-violet-700 px-8 py-4 rounded-lg shadow-lg shadow-violet-300/50 font-semibold text-xl hover:scale-110 duration-200 hover:shadow-xl hover:shadow-violet-400/50 bg-violet-500  text-violet-800 ">
             {t.quizpagebutton}
           </Link>
